@@ -1,8 +1,9 @@
 {
     "compilerOptions": {
         "target": "esnext",
-        "noEmit": false,
-        "outDir": "dist"
+        "noEmit": true,
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true
     },
     "include": ["src/**/*"]
 }
