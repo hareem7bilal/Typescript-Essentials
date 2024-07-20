@@ -165,20 +165,24 @@ x.number = 1234
 x.active = true
 x.log = () => console.log("awesome!")
 
-interface Query {
+interface Query<TProp> {
     sort?: 'asc' | 'desc';
-    matches(val): boolean;
+    matches(val:TProp): boolean;
 }
 
 // type ContactQuery = Omit<Partial<Record<keyof Contact, Query>>, "address" | "status">
-type ContactQuery = Partial<Pick<Record<keyof Contact, Query>, "id"| "name">>
-type RequiredContactQuery = Required<ContactQuery>
+// type ContactQuery = Partial<Pick<Record<keyof Contact, Query>, "id"| "name">>
+// type RequiredContactQuery = Required<ContactQuery>
+
+type ContactQuery = {
+    [TProp in keyof Contact]?:Query<Contact[TProp]>
+}
 
 function searchContacts(contacts: Contact[], query: ContactQuery) {
     return contacts.filter(contact => {
         for (const property of Object.keys(contact) as (keyof Contact)[]) {
             // get the query object for this property
-            const propertyQuery = query[property];
+            const propertyQuery = query[property] as Query<Contact[keyof Contact]>;
             // check to see if it matches
             if (propertyQuery && propertyQuery.matches(contact[property])) {
                 return true;
