@@ -1,0 +1,8 @@
+{
+    "compilerOptions": {
+        "target": "esnext",
+        "noEmit": false,
+        "outDir": "dist"
+    },
+    "include": ["src/**/*"]
+}
